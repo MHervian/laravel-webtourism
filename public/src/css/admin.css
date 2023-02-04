@@ -1,0 +1,49 @@
+/* Font style */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap');
+* { 
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5, h6 { 
+    font-family: 'Nunito Sans', sans-serif; 
+    font-weight: 700;
+}
+
+/** halaman login */
+.login-section {
+    background-image: url('../images/pantai-lagoi.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.login-section hr {
+    margin: 2rem 0;
+    border-style: dotted;
+}
+
+/** base dashboard */
+body, #content, body > .container-fluid {
+    position: relative;
+    height: 100%;
+}
+.main-navigation, .main-content {
+    position: absolute;
+}
+.main-navigation {
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #fefefe;
+}
+.main-content {
+    top: 0;
+    right: 0;
+    height: 100%;
+    background-color: #f9f9f9;
+}
+
+/** navigasi */
+.home-link {
+    color: #262626; 
+    text-decoration: none; 
+    font-size: 1.3rem;
+}

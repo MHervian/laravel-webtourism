@@ -1,0 +1,224 @@
+/* Font style */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap');
+* { 
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5, h6 { 
+    font-family: 'Nunito Sans', sans-serif; 
+    font-weight: 700;
+}
+
+/* Navigasi */
+.navbar-expand-lg .navbar-collapse {
+    justify-content: end;
+}
+
+/* Header */
+.bg-header {
+    position: relative;
+    background: url("../images/header.jpg") no-repeat;
+    background-size: cover;
+    z-index: 2;
+}
+
+.bg-header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.410);
+    z-index: 1;
+}
+
+.bg-header * {
+    position: relative;
+    z-index: 3;
+}
+
+/* Content section */
+.card-packet, .card-accomodation {
+    text-decoration: none;
+    color: #0a0a0a;
+}
+.card-packet > div, .card-accomodation > div {
+    border-radius: 5px;
+    background-color: white;
+}
+.card-packet {
+    position: relative;
+    z-index: 1;
+}
+.card-packet > div {
+    position: relative;
+}
+.card-packet > div::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #b3e6ff;
+    border-radius: 5px;
+
+    position: absolute;
+    top: 4px;
+    left: 7px;
+    z-index: -1;
+}
+.card-packet-price > p {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+/* .card-packet-price > span {
+    display: block;
+    text-decoration: line-through;
+    font-size: 1rem;
+    color: #aeaeae;
+} */
+.card-packet-price > span + span {
+    font-size: 1.32rem;
+    text-decoration: none;
+}
+
+.card-accomodation {
+    position: relative;
+    z-index: 1;
+}
+.card-accomodation > div {
+    position: relative;
+}
+.card-accomodation > div::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #b3e6ff;
+    border-radius: 5px;
+
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    z-index: -1;
+}
+.card-accomodation > div {
+    /* display: flex;
+    flex-direction: column; */
+    height: 100%;
+    width: 100%;
+}
+.card-accomodation > div > p, 
+.card-accomodation > div > div > p {
+    font-family: 'Nunito Sans', sans-serif; 
+    font-weight: 700;
+    font-size: 1.14rem;
+}
+
+.cs-card-wisata {
+    text-decoration: none;
+}
+.cs-card-wisata > div > span {
+    font-weight: 700;
+    color:  #212529;
+    font-size: 1.14rem;
+}
+.cs-card-wisata > div > span + span {
+    font-weight: 400;
+    color: #666666;
+    font-size: 1rem;
+}
+.cs-card-wisata:hover > div > span {
+    color: var(--bs-link-hover-color);
+}
+
+.cs-map {
+    position: relative;
+}
+.cs-map::after {
+    content: "";
+    width: 200px;
+    height: 0;
+    border: 3px solid #b3e6ff;
+
+    position: absolute;
+    bottom: 0;
+    left: calc((100% / 2) - 100px);
+}
+
+.cs-acomodation {
+    position: relative;
+    z-index: 2;
+    background-color: transparent;
+    margin-top: -90px;
+}
+
+.event-list > a {
+    text-decoration: none;
+    color: #212529;
+}
+.event-list > a > div > div > span {
+    color: white;
+    background-color: #0088cc;
+}
+.event-list > a:hover {
+    color: #0088cc;
+}
+
+/* Miscellaneous */
+.back-grey {
+    /* position: relative; */
+    background-color: #f2f2f2;
+}
+
+.cs-text-blue {
+    color: #0088cc;
+}
+
+.btn-custom-cta {
+    background-color: #0088cc;
+    font-family: 'Nunito Sans', sans-serif; 
+    font-weight: 700;
+    color: white;
+}
+
+.cs-categories {
+    background-color: #0088cc;
+    font-family: 'Nunito Sans', sans-serif; 
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.nav-category {
+    display: block;
+    width: 100%;
+    list-style-type: none;
+}
+
+.nav-category li {
+    display: inline-block;
+}
+
+hr {
+    border-top-style: dashed;
+    border-top-width: 4px;
+    border-top-color: #0088cc;
+}
+
+/* Breakpoints */
+@media screen and (max-width: 991px) {
+    .cs-card-wisata > div > span {
+        font-size: 1.44rem;
+    }
+    .cs-card-wisata > div > span + span {
+        font-size: 1.13rem;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .cs-card-wisata > div > span {
+        font-size: 1.2rem;
+    }
+    .cs-card-wisata > div > span + span {
+        font-size: 1rem;
+    }
+}
