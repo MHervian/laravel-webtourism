@@ -7,6 +7,10 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-circle"></i></div>
                     Dashboard
                 </a>
+                <a class="nav-link" href="{{ route('admin.homepage') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-circle"></i></div>
+                    Edit Homepage
+                </a>
                 <div class="sb-sidenav-menu-heading">Travel, Agen, & Wisata</div>
                 <a class="nav-link" href="{{ route('admin.paket') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-circle"></i></div>

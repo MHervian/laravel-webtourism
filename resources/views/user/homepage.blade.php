@@ -6,12 +6,9 @@
         <div class="container py-5">
             <div class="row py-5">
                 <div class="col-lg-6 py-5">
-                    <h1 class="mb-4 text-white">Lorem Ipsum Dolor Sit Amet</h1>
+                    <h1 class="mb-4 text-white">{{ $homepage->main_header_title }}</h1>
                     <p class="text-white">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                        Delectus impedit neque nisi obcaecati nobis! Vero in debitis,
-                        rerum dicta maxime quibusdam saepe unde ad aliquam aperiam
-                        tempora soluta fuga excepturi!
+                    {{ $homepage->info_header }}
                     </p>
                 </div>
             </div>
@@ -23,12 +20,9 @@
             <div class="row">
                 @if (count($paket) > 0)
                 <div class="col-md-12 col-lg-3 order-lg-1 mb-md-4 mb-sm-4 mb-4 mb-lg-0">
-                    <h2>Paket Wisata Menarik</h2>
+                    <h2>{{ $homepage->title_paket }}</h2>
                     <p>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                        Aut magnam id quam repudiandae eveniet hic totam nesciunt
-                        numquam excepturi eaque, delectus voluptas consequatur
-                        obcaecati cum blanditiis saepe voluptatem deleniti consectetur.
+                        {{ $homepage->desc_paket_title }}
                     </p>
                     <a href="{{ route('enduser.paket') }}" class="btn btn-lg btn-custom-cta">Lihat Semua Paket</a>
                 </div>
@@ -54,8 +48,8 @@
     </div>
 
     <div class="container py-5">
-        <h2 class="text-center mb-3">Peta Wisata</h2>
-        <p class="text-center mb-5 pb-5 cs-map">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione ducimus eligendi possimus libero accusantium dolores debitis doloremque eos accusamus, tempora veritatis labore quaerat, alias ut placeat sunt corporis iusto repellendus.</p>
+        <h2 class="text-center mb-3">{{ $homepage->title_peta }}</h2>
+        <p class="text-center mb-5 pb-5 cs-map">{{ $homepage->desc_peta }}</p>
         <div class="row align-items-center pt-4 pb-5 mb-5">
             <div class="col-lg-4">
                 @foreach($peta_wisata as $pw)
@@ -80,8 +74,8 @@
     <div class="container">
         <div class="row pt-5 pb-5">
             <div class="col-md-6 order-lg-1 order-md-1 mb-md-4 mb-sm-4 mb-4 mb-lg-0">
-                <h2>Daya Tarik Wisata</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit placeat quis perspiciatis ipsam fugiat praesentium inventore necessitatibus atque autem nihil quae odio excepturi saepe ea, et earum magnam voluptas libero!</p>
+                <h2 class="mb-2">{{ $homepage->title_daya_tarik }}</h2>
+                <p>{{ $homepage->desc_daya_tarik }}</p>
                 <a href="{{ route('enduser.dayatarik') }}" class="btn btn-custom-cta">
                     Lihat Daya Tarik Wisata
                 </a>
@@ -95,8 +89,8 @@
     <div class="container">
         <div class="row pt-5 pb-5">
             <div class="col-md-6 mb-md-4 mb-sm-4 mb-4 mb-lg-0">
-                <h2>Pusat Informasi Transportasi</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus illum quo aspernatur saepe ipsa perferendis natus, in reiciendis, sequi iure impedit dicta eligendi commodi, quae sunt optio placeat minus!</p>
+                <h2 class="mb-2">{{ $homepage->title_transportasi }}</h2>
+                <p>{{ $homepage->desc_transportasi }}</p>
                 @foreach($transportasi as $tr)
                 <a href="{{ route('enduser.transportasi', ['id_transportasi' => $tr->id_transportasi]) }}" class="btn btn-custom-cta mb-4">Info {{ $tr->nama }}</a>
                 @endforeach
@@ -111,8 +105,8 @@
     <div class="container mt-5">
         <div class="row mt-5 pt-5 pb-3">
             <div class="text-center">
-                <h2>Akomodasi</h2>
-                <P>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque ea architecto optio quas fuga amet. Saepe facilis ipsum incidunt expedita? Amet ipsam rem officiis fugit velit voluptates quaerat minus quisquam!</P>
+                <h2>{{ $homepage->title_akomodasi }}</h2>
+                <p>{{ $homepage->desc_akomodasi }}</p>
             </div>
         </div>
     </div>
