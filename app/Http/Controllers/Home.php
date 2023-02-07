@@ -23,6 +23,7 @@ class Home extends Controller
         
         // query data homepage
         $homepage = DB::table('home_content')
+            ->where('id_content', '=', 1)
             ->get()->first();
 
         // query data peta wisata
@@ -58,11 +59,12 @@ class Home extends Controller
             return redirect()->route('admin');
 
         $homepage = DB::table('home_content')
+            ->where('id_content', '=', 1)
             ->get()->first();
 
         $data = [
             'login_user' => $request->session()->get('login_user'),
-            'homepage' => $homepage
+            'detail' => $homepage
         ];
 
         return view('admin.homepage', $data);
@@ -74,16 +76,26 @@ class Home extends Controller
         if (!$request->session()->exists('login_user'))
             return redirect()->route('admin');
 
-        $id_data = $request->input('id_data');
+        $id_content = $request->input('id_content');
         $data = [
-            'main_header_title' => $request->input('mainHeaderTitle'),
-            'no_kontak' => $request->input('kontak'),
+            'main_title' => $request->input('main_title', null),
+            'desc_main' => $request->input('desc_main', null),
+            'title_paket' => $request->input('title_paket', null),
+            'desc_paket' => $request->input('desc_paket', null),
+            'title_peta' => $request->input('title_peta', null),
+            'desc_peta' => $request->input('desc_peta', null),
+            'title_daya_tarik' => $request->input('title_daya_tarik', null),
+            'desc_daya_tarik' => $request->input('desc_daya_tarik', null),
+            'title_transportasi' => $request->input('title_transportasi', null),
+            'desc_transportasi' => $request->input('desc_transportasi', null),
+            'title_akomodasi' => $request->input('title_akomodasi', null),
+            'desc_akomodasi' => $request->input('desc_akomodasi', null),
         ];
 
-        DB::table('emergency')
-            ->where('id_emergency', '=', $id_emergency)
+        DB::table('home_content')
+            ->where('id_content', '=', $id_content)
             ->update($data);
 
-        return redirect()->route('admin.emergency');
+        return redirect()->route('admin.edithomepage');
     }
 }

@@ -69,8 +69,8 @@ Route::get('/admin/logout', [Admin::class, 'logout'])->name('admin.logout');
 Route::get('/admin/dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
 
 // route edit homepage admin
-Route::get('/admin/transportasi', [Transportasi::class, 'indexAdmin'])->name('admin.transportasi');
-Route::post('/admin/transportasi/update', [Transportasi::class, 'updateData'])->name('admin.transportasi.update');
+Route::get('/admin/edit-homepage', [Home::class, 'indexAdmin'])->name('admin.edithomepage');
+Route::post('/admin/edit-homepage/update', [Home::class, 'updateData'])->name('admin.edithomepage.update');
 
 // route transportasi admin
 Route::get('/admin/transportasi', [Transportasi::class, 'indexAdmin'])->name('admin.transportasi');

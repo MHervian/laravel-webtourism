@@ -6,9 +6,9 @@
         <div class="container py-5">
             <div class="row py-5">
                 <div class="col-lg-6 py-5">
-                    <h1 class="mb-4 text-white">{{ $homepage->main_header_title }}</h1>
+                    <h1 class="mb-4 text-white">{{ $homepage->main_title }}</h1>
                     <p class="text-white">
-                    {{ $homepage->info_header }}
+                    {{ $homepage->desc_main }}
                     </p>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                 <div class="col-md-12 col-lg-3 order-lg-1 mb-md-4 mb-sm-4 mb-4 mb-lg-0">
                     <h2>{{ $homepage->title_paket }}</h2>
                     <p>
-                        {{ $homepage->desc_paket_title }}
+                        {{ $homepage->desc_paket }}
                     </p>
                     <a href="{{ route('enduser.paket') }}" class="btn btn-lg btn-custom-cta">Lihat Semua Paket</a>
                 </div>

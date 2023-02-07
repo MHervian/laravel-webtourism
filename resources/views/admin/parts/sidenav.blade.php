@@ -7,7 +7,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-circle"></i></div>
                     Dashboard
                 </a>
-                <a class="nav-link" href="{{ route('admin.homepage') }}">
+                <a class="nav-link" href="{{ route('admin.edithomepage') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-circle"></i></div>
                     Edit Homepage
                 </a>
