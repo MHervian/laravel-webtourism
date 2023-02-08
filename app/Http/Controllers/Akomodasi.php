@@ -88,8 +88,8 @@ class Akomodasi extends Controller
         $path = explode('/', $request->headers->get('referer'));
         $id_akomodasi_cat = array_pop($path);
 
-        $search_kategori = null;
-        $search_nama = null;
+        $search_kategori = '';
+        $search_nama = '';
         $query = DB::table('akomodasi')
             ->select('id_akomodasi', 'akomodasi.id_akomodasi_cat', 'judul', 'akomodasi.thumbnail', 'alamat', 'nama_cat')
             ->join('akomodasi_cat', 'akomodasi_cat.id_akomodasi_cat', '=', 'akomodasi.id_akomodasi_cat');
@@ -123,12 +123,13 @@ class Akomodasi extends Controller
             ->get()->all();
 
         $data = [
-            'title_page' => 'Cari Nama Akomodasi: ' . $search_nama . ' - Website Agen Wisata',
+            'title_page' => 'Cari Berdasarkan Nama: ' . $search_nama . ' - Website Agen Wisata',
+            'bread_main_title' => 'Cari Berdasarkan Nama : ' . $search_nama,
             'transportasi' => $transportasi,
             'akomodasi' => $akomodasi,
             'kategori_akomodasi' => $kategori_akomodasi,
             'list' => $query->get()->all(),
-            'id_kategori' => '',
+            // 'id_kategori' => '',
             'nama_kategori' => '',
             'search_nama' => $search_nama,
         ];
@@ -139,7 +140,8 @@ class Akomodasi extends Controller
                 return $kategori->id_akomodasi_cat === intval($search_kategori);
             });
             $kategori = array_pop($kategori);
-            $data['title_page'] = 'Kategori Akomodasi: ' . $kategori->nama_cat . ' - Website Agen Wisata';
+            $data['title_page'] = 'Cari Berdasarkan Kategori: ' . $kategori->nama_cat . ' - Website Agen Wisata';
+            $data['bread_title'] = 'Cari Berdasarkan Kategori: ' . $kategori->nama_cat;
             $data['id_kategori'] = $kategori->id_akomodasi_cat;
             $data['nama_kategori'] = $kategori->nama_cat;
         }

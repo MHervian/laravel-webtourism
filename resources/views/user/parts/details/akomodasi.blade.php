@@ -24,7 +24,7 @@
         <div class="container py-5">
             <div class="row rounded mb-5">
                 <div class="col-lg-5">
-                    <img src="{{ asset('storage/akomodasi/' . $detail->thumbnail) }}" class="img-fluid mb-3">
+                    <img src="{{ asset('uploads/akomodasi/' . $detail->thumbnail) }}" class="img-fluid mb-3">
                     <div class="bg-white rounded p-3">
                         {!! $detail->deskripsi !!}
                     </div>
@@ -49,7 +49,7 @@
                 @if (count($list_gambar) > 0)
                 @foreach($list_gambar as $gambar)
                 <div class="col-lg-4 col-md-6">
-                    <img src="{{ asset('storage/akomodasi/' . $gambar ) }}" class="img-fluid mb-md-4 mb-sm-4 mb-4 mb-lg-4">
+                    <img src="{{ asset('uploads/akomodasi/' . $gambar ) }}" class="img-fluid mb-md-4 mb-sm-4 mb-4 mb-lg-4">
                 </div>
                 @endforeach
                 @else

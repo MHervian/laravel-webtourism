@@ -45,7 +45,7 @@
             <div class="row">
                 @if ( count($list) > 0 )
                 @foreach($list as $ls)
-                <a href="{{ route('enduser.akomodasi.detail', ['id_akomodasi_cat' => $id_kategori, 'id_akomodasi' => $ls->id_akomodasi, 'kategori' => $nama_kategori]) }}" class="col-lg-3 col-md-4 col-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4 card-accomodation">
+                <a href="{{ route('enduser.akomodasi.detail', ['id_akomodasi_cat' => $id_kategori, 'id_akomodasi' => $ls->id_akomodasi]) }}" class="col-lg-3 col-md-4 col-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4 card-accomodation">
                     <div>
                         <img src="{{ asset('uploads/akomodasi/' . $ls->thumbnail) }}" class="img-fluid">
                         <div class="p-2">
