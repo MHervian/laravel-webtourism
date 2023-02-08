@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="bg-white rounded p-3">
-                        <img src="{{ asset('storage/paket/' . $paket->poster_iklan) }}" class="img-fluid mb-3">
+                        <img src="{{ asset('uploads/paket/' . $paket->poster_iklan) }}" class="img-fluid mb-3">
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 @foreach ($destinasi as $d)
                 <a href="{{ route('enduser.petawisata.detail', ['id_wisata' => $d->id_wisata]) }}" class="col-lg-3 col-md-4 col-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4 card-accomodation">
                     <div>
-                        <img src="{{ asset('storage/wisata/' . $d->thumbnail ) }}" class="img-fluid">
+                        <img src="{{ asset('uploads/wisata/' . $d->thumbnail ) }}" class="img-fluid">
                         <div class="p-2">
                             <p class="m-0">{{ $d->judul }}</p>
                             <span class="d-block mb-2">{{ $d->alamat }}</span>

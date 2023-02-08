@@ -10,9 +10,9 @@
                     <span>
                         <a href="{{ route('enduser.homepage') }}" class="text-white">Beranda</a>
                         <span class="text-white">/</span>
-                        <span class="text-white">Paket Wisata</span>
+                        <span class="text-white">{{ $bread_main_title }}</span>
                     </span>
-                    <h1 class="mb-4 text-white">Paket Wisata</h1>
+                    <h1 class="mb-4 text-white">{{ $bread_main_title }}</h1>
                 </div>
             </div>
         </div>
@@ -43,8 +43,8 @@
             </div>
             <p class="fw-bold">Hasil Pencarian Paket Wisata:</p>
             <div class="row">
-                @if (count($paket) > 0)
-                @foreach ($paket as $p)
+                @if (count($list) > 0)
+                @foreach ($list as $p)
                 <a href="{{ route('enduser.paket.detail', ['id_paket' => $p->id_paket]) }}" class="col-md-4 col-lg-3 mb-md-4 mb-sm-4 mb-4 mb-lg-4 card-packet">
                     <div>
                         <img src="{{ asset('uploads/paket/' . $p->poster_iklan) }}" class="img-fluid">

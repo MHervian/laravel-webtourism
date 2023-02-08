@@ -13,7 +13,8 @@ class Paket extends Controller
      */
 
     // main index
-    public function index() {
+    public function index()
+    {
         // query data nama transportasi dan akomodasi
         $transportasi = DB::table('transportasi')
             ->select('id_transportasi', 'nama')
@@ -25,7 +26,7 @@ class Paket extends Controller
         // data semua paket wisata
         $paket = DB::table('paket')
             ->get()->all();
-        
+
         // data semua agen wisata
         $agen = DB::table('agen_wisata')
             ->select('id_agen_wisata', 'nama')
@@ -43,7 +44,8 @@ class Paket extends Controller
     }
 
     // detail paket
-    public function detail($id_paket = "") {
+    public function detail($id_paket = "")
+    {
         // query data nama transportasi dan akomodasi
         $transportasi = DB::table('transportasi')
             ->select('id_transportasi', 'nama')
@@ -51,18 +53,18 @@ class Paket extends Controller
         $akomodasi = DB::table('akomodasi_cat')
             ->select('id_akomodasi_cat', 'nama_cat')
             ->get()->all();
-        
+
         // query data paket wisata
         $paket = DB::table('paket')
             ->where('id_paket', '=', $id_paket)
             ->get()->first();
-        
+
         $destinasi = DB::table('destinasi')
             ->select('wisata.id_wisata', 'wisata.judul', 'wisata.thumbnail', 'wisata.alamat')
             ->join('wisata', 'wisata.id_wisata', '=', 'destinasi.id_wisata')
             ->where('destinasi.id_paket', '=', $id_paket)
             ->get()->all();
-        
+
         $data = [
             'title_page' => 'Detail Paket Wisata - Web Agen Wisata',
             'transportasi' => $transportasi,
@@ -72,6 +74,68 @@ class Paket extends Controller
         ];
 
         return view('user.parts.details.paket', $data);
+    }
+
+    // method pencarian data
+    public function search(Request $request)
+    {
+        $id_agen = '';
+        $nama_paket = '';
+        $query = DB::table('paket')
+            ->select('id_paket', 'id_agen_wisata', 'judul', 'harga', 'poster_iklan');
+
+        // cari paket berdasarkan agen penyedia
+        if ($request->input('id_agen', null)) {
+            $id_agen = $request->input('id_agen');
+            $query->where('id_agen_wisata', '=', $id_agen);
+        }
+
+        // cari paket berdasarkan nama paket
+        if ($request->input('nama_paket', null)) {
+            $nama_paket = $request->input('nama_paket');
+            $query->where('judul', 'like', "%" . $nama_paket . "%");
+        }
+
+        // kalau tidak ada pencarian
+        if (!$id_agen && !$nama_paket) {
+            return redirect()->route('enduser.paket'); // redirect ke halaman sebelumnya
+        }
+
+        // query data nama transportasi, akomodasi, dan kategori akomodasi
+        $transportasi = DB::table('transportasi')
+            ->select('id_transportasi', 'nama')
+            ->get()->all();
+        $akomodasi = DB::table('akomodasi_cat')
+            ->select('id_akomodasi_cat', 'nama_cat')
+            ->get()->all();
+        // data semua agen wisata
+        $agen = DB::table('agen_wisata')
+            ->select('id_agen_wisata', 'nama')
+            ->get()->all();
+
+        $data = [
+            'title_page' => 'Cari Berdasarkan Nama Paket: ' . $nama_paket . ' - Website Agen Wisata',
+            'bread_main_title' => 'Cari Berdasarkan Nama: ' . $nama_paket,
+            'transportasi' => $transportasi,
+            'akomodasi' => $akomodasi,
+            'agen' => $agen,
+            'list' => $query->get()->all(),
+            'nama_paket' => $nama_paket,
+        ];
+
+        // jika dicari menggunakan kategori akomodasi
+        if ($id_agen) {
+            $kategori_agen = array_filter($agen, function ($kategori) use ($id_agen) {
+                return $kategori->id_agen_wisata === intval($id_agen);
+            });
+            $kategori_agen = array_pop($kategori_agen);
+            $data['title_page'] = 'Cari Paket Berdasarkan Agen: ' . $kategori_agen->nama . ' - Website Agen Wisata';
+            $data['bread_title'] = 'Cari Paket Berdasarkan Agen: ' . $kategori_agen->nama;
+            $data['id_agen'] = $kategori_agen->id_agen_wisata;
+            $data['nama_agen'] = $kategori_agen->nama;
+        }
+
+        return view('user.parts.search.agen', $data);
     }
 
     /**
@@ -229,7 +293,7 @@ class Paket extends Controller
     {
         if (!$request->session()->exists('login_user'))
             return redirect()->route('admin');
-        
+
         // query data thumbnail
         $data = DB::table('paket')
             ->select('poster_iklan')

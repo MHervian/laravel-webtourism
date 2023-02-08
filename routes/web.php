@@ -48,6 +48,7 @@ Route::post('/agen/search', [Agen::class, 'search'])->name('enduser.agen.search'
 // paket wisata
 Route::get('/paket', [Paket::class, 'index'])->name('enduser.paket');
 Route::get('/paket/{id_paket}', [Paket::class, 'detail'])->name('enduser.paket.detail');
+Route::post('/paket/search', [Paket::class, 'search'])->name('enduser.paket.search');
 
 // peta wisata
 Route::get('/wisata', [Wisata::class, 'index'])->name('enduser.petawisata');
