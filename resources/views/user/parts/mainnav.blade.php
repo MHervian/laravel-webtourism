@@ -41,7 +41,7 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Akomodasi</a>
                         <ul class="dropdown-menu">
                             @foreach($list_akomodasi as $la)
-                            <li><a href="{{ route('enduser.akomodasi', ['id_akomodasi_cat' => $la->id_akomodasi_cat, 'kategori' => $la->nama_cat]) }}" class="dropdown-item">
+                            <li><a href="{{ route('enduser.akomodasi', ['id_akomodasi_cat' => $la->id_akomodasi_cat]) }}" class="dropdown-item">
                                     {{ $la->nama_cat }}
                                 </a></li>
                             @endforeach

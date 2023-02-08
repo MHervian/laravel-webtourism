@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2023 at 11:13 PM
+-- Generation Time: Jan 19, 2023 at 04:05 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -170,35 +170,6 @@ INSERT INTO `emergency` (`id_emergency`, `nama`, `no_kontak`, `alamat`, `thumbna
 (2, 'Fire Emergency', '+62 (770) 691 911', NULL, NULL),
 (3, 'Police', '+62 (813) 7125 2100', NULL, NULL),
 (4, 'Medical Clinic', '+62 (811) 7714546', NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `home_content`
---
-
-CREATE TABLE `home_content` (
-  `id_content` int(11) NOT NULL,
-  `main_title` text DEFAULT NULL,
-  `desc_main` text DEFAULT NULL,
-  `title_paket` text DEFAULT NULL,
-  `desc_paket` text DEFAULT NULL,
-  `title_peta` text DEFAULT NULL,
-  `desc_peta` text DEFAULT NULL,
-  `title_daya_tarik` text DEFAULT NULL,
-  `desc_daya_tarik` text DEFAULT NULL,
-  `title_transportasi` text DEFAULT NULL,
-  `desc_transportasi` text DEFAULT NULL,
-  `title_akomodasi` text DEFAULT NULL,
-  `desc_akomodasi` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `home_content`
---
-
-INSERT INTO `home_content` (`id_content`, `main_title`, `desc_main`, `title_paket`, `desc_paket`, `title_peta`, `desc_peta`, `title_daya_tarik`, `desc_daya_tarik`, `title_transportasi`, `desc_transportasi`, `title_akomodasi`, `desc_akomodasi`) VALUES
-(1, 'Bintan Resorts, Bintan Island,Indonesia', 'Dengan sejarah yang kaya sejak berabad-abad yang lalu,\r\npulau Bintan di Indonesia adalah tempat kenyamanan\r\nkontemporer berpadu dengan pesona indah. Bintan Resorts\r\nadalah destinasi resor pantai terpadu pemenang banyak\r\npenghargaan yang menjadi tuan rumah bagi tiga belas resor\r\npantai independen, empat lapangan golf desainer, serta\r\nberbagai fasilitas dan atraksi rekreasi yang terus berkembang.\r\nMencakup seluruh pantai utara Pulau Bintan dan terletak hanya\r\n60 menit perjalanan dengan feri katamaran dari Singapura,\r\nmudah diakses bagi mereka yang mencari liburan pantai tropis\r\nyang sempurna.', 'Paket Wisata ke Bintan', 'Tersedia paket dari semua agen - agen kami yang terpercaya.', 'Peta Wisata', 'Bintan Resorts International (BRI) bertanggung jawab atas\r\ninvestasi dan pemasaran destinasi untuk Bintan Resorts.\r\nBekerja sama dengan travel trade dan mitra media, BRI\r\nmembuka jalan bagi Bintan Resorts dan pulau itu untuk\r\nmenjangkau audiens global melalui upaya dan aktivitas\r\npemasaran yang berkelanjutan. Perusahaan juga berfungsi\r\n\r\nsebagai perencana pengembangan pariwisata dan konsultan\r\nmanajemen Bintan Resorts.', 'Daya Tarik Wisata', NULL, 'Pusat Informasi Transportasi', NULL, 'Akomodasi Baru', 'Tersedia beragam informasi dari Hotel, Restoran,\r\nPasar/Swalayan, Rumah Sakit/Klinik, Rental Motor, dan Money\r\nChanger.');
 
 -- --------------------------------------------------------
 
@@ -409,12 +380,6 @@ ALTER TABLE `emergency`
   ADD PRIMARY KEY (`id_emergency`);
 
 --
--- Indexes for table `home_content`
---
-ALTER TABLE `home_content`
-  ADD PRIMARY KEY (`id_content`);
-
---
 -- Indexes for table `kalender`
 --
 ALTER TABLE `kalender`
@@ -539,7 +504,7 @@ ALTER TABLE `transportasi`
 -- AUTO_INCREMENT for table `wisata`
 --
 ALTER TABLE `wisata`
-  MODIFY `id_wisata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_wisata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `wisata_cat`

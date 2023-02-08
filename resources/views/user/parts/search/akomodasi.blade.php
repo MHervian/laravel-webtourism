@@ -10,9 +10,9 @@
                     <span>
                         <a href="#" class="text-white">Beranda</a>
                         <span class="text-white">/</span>
-                        <a href="#" class="text-white">Akomodasi {{ $nama_kategori }}</a>
+                        <span class="text-white">Pencarian Akomodasi : {{ ($nama_kategori)? $nama_kategori : null }}</span>
                     </span>
-                    <h1 class="mb-4 text-white">Akomodasi {{ $nama_kategori }}</h1>
+                    <h1 class="mb-4 text-white">Pencarian Akomodasi : {{ ($nama_kategori)? $nama_kategori : null }}</h1>
                 </div>
             </div>
         </div>
@@ -41,11 +41,11 @@
                     </div>
                 </form>
             </div>
-            <p>Kategori Akomodasi: <span  class="fw-bold">{{ $nama_kategori }}</span></p>
+            <p>Hasil Proses Pencarian <span class="fw-bold">{{ ($nama_kategori)? "Kategori $nama_kategori" : $search_nama }}</span></p>
             <div class="row">
                 @if ( count($list) > 0 )
                 @foreach($list as $ls)
-                <a href="{{ route('enduser.akomodasi.detail', ['id_akomodasi_cat' => $id_kategori, 'id_akomodasi' => $ls->id_akomodasi, 'kategori' => $nama_kategori]) }}" class="col-lg-3 col-md-4 col-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4 card-accomodation">
+                <a href="{{ route('enduser.akomodasi.detail', ['id_akomodasi_cat' => $ls->id_kategori, 'id_akomodasi' => $ls->id_akomodasi, 'kategori' => $nama_kategori]) }}" class="col-lg-3 col-md-4 col-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4 card-accomodation">
                     <div>
                         <img src="{{ asset('uploads/akomodasi/' . $ls->thumbnail) }}" class="img-fluid">
                         <div class="p-2">

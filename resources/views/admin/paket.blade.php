@@ -67,7 +67,7 @@
                                 </tbody>
                             </table>
                             @else
-                            <p class="text-center bg-info p-3">Data kontak emergency belum ada.</p>
+                            <p class="text-center bg-info p-3">Data paket wisata belum ada.</p>
                             @endif
                         </div>
                     </div>

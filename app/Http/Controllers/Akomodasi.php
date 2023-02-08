@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class Akomodasi extends Controller
 {
@@ -14,12 +13,8 @@ class Akomodasi extends Controller
      */
 
     // halaman utama akomodasi
-    public function index(Request $request, $id_akomodasi_cat = null)
+    public function index($id_akomodasi_cat = null)
     {
-        // ambil query data dari url
-        $search = $request->query('search', null);
-        $kategori = $request->query('kategori', null);
-
         // query data nama transportasi dan akomodasi
         $transportasi = DB::table('transportasi')
             ->select('id_transportasi', 'nama')
@@ -27,32 +22,31 @@ class Akomodasi extends Controller
         $akomodasi = DB::table('akomodasi_cat')
             ->select('id_akomodasi_cat', 'nama_cat')
             ->get()->all();
-
-        // query informasi detail transportasi
-        $list = DB::table('akomodasi')
-            ->select('id_akomodasi', 'id_akomodasi_cat', 'judul', 'thumbnail', 'alamat')
-            ->where('id_akomodasi_cat', '=', $id_akomodasi_cat)
-            ->get()->all();
-
         $kategori_akomodasi = DB::table('akomodasi_cat')
             ->select('id_akomodasi_cat', 'nama_cat')
             ->get()->all();
 
-        // cek apakah sedang pencarian data
-        $status_cari = false;
-        if ($search) {
-            $status_cari = true; // benar, jika melakukan pencarian
-        }
+        // query list data-data akomodasi
+        $list = DB::table('akomodasi')
+            ->select('id_akomodasi', 'akomodasi.id_akomodasi_cat', 'judul', 'akomodasi.thumbnail', 'alamat', 'nama_cat')
+            ->join('akomodasi_cat', 'akomodasi_cat.id_akomodasi_cat', '=', 'akomodasi.id_akomodasi_cat')
+            ->where('akomodasi.id_akomodasi_cat', '=', $id_akomodasi_cat)
+            ->get()->all();
+
+        // ambil data nama kategori akomodasi
+        $kategori = array_filter($kategori_akomodasi, function ($kategori) use ($id_akomodasi_cat) {
+            return $kategori->id_akomodasi_cat === intval($id_akomodasi_cat);
+        });
+        $kategori = array_pop($kategori);
 
         $data = [
-            'title_page' => 'List Akomodasi ' . $kategori . ' - Website Agen Wisata',
+            'title_page' => 'List Akomodasi ' . $kategori->nama_cat . ' - Website Agen Wisata',
             'transportasi' => $transportasi,
             'akomodasi' => $akomodasi,
-            'list' => $list,
             'kategori_akomodasi' => $kategori_akomodasi,
-            'status_cari' => $status_cari,
+            'list' => $list,
             'id_kategori' => $id_akomodasi_cat,
-            'nama_kategori' => $kategori
+            'nama_kategori' => $kategori->nama_cat,
         ];
 
         return view('user.akomodasi', $data);
@@ -82,10 +76,75 @@ class Akomodasi extends Controller
             'akomodasi' => $akomodasi,
             'detail' => $detail,
             'id_kategori' => $id_akomodasi_cat,
-            'nama_kategori' => $kategori
+            'nama_kategori' => $kategori,
         ];
 
         return view('user.parts.details.akomodasi', $data);
+    }
+
+    public function search(Request $request)
+    {
+        // mendapatakan referer dari header request masuk
+        $path = explode('/', $request->headers->get('referer'));
+        $id_akomodasi_cat = array_pop($path);
+
+        $search_kategori = null;
+        $search_nama = null;
+        $query = DB::table('akomodasi')
+            ->select('id_akomodasi', 'akomodasi.id_akomodasi_cat', 'judul', 'akomodasi.thumbnail', 'alamat', 'nama_cat')
+            ->join('akomodasi_cat', 'akomodasi_cat.id_akomodasi_cat', '=', 'akomodasi.id_akomodasi_cat');
+
+        // cari berdasarkan kategori akomodasi
+        if ($request->input('kategori', null)) {
+            $search_kategori = $request->input('kategori');
+            $query->where('akomodasi.id_akomodasi_cat', '=', $search_kategori);
+        }
+
+        // cari berdasarkan nama akomodasi
+        if ($request->input('nama_akomodasi', null)) {
+            $search_nama = $request->input('nama_akomodasi');
+            $query->where('judul', 'like', "%" . $search_nama . "%");
+        }
+
+        // kalau tidak ada pencarian
+        if (!$search_kategori && !$search_nama) {
+            return redirect()->route('enduser.akomodasi', ['id_akomodasi_cat' => $id_akomodasi_cat]); // redirect ke halaman sebelumnya
+        }
+
+        // query data nama transportasi, akomodasi, dan kategori akomodasi
+        $transportasi = DB::table('transportasi')
+            ->select('id_transportasi', 'nama')
+            ->get()->all();
+        $akomodasi = DB::table('akomodasi_cat')
+            ->select('id_akomodasi_cat', 'nama_cat')
+            ->get()->all();
+        $kategori_akomodasi = DB::table('akomodasi_cat')
+            ->select('id_akomodasi_cat', 'nama_cat')
+            ->get()->all();
+
+        $data = [
+            'title_page' => 'Cari Nama Akomodasi: ' . $search_nama . ' - Website Agen Wisata',
+            'transportasi' => $transportasi,
+            'akomodasi' => $akomodasi,
+            'kategori_akomodasi' => $kategori_akomodasi,
+            'list' => $query->get()->all(),
+            'id_kategori' => '',
+            'nama_kategori' => '',
+            'search_nama' => $search_nama,
+        ];
+
+        // jika dicari menggunakan kategori akomodasi
+        if ($search_kategori) {
+            $kategori = array_filter($kategori_akomodasi, function ($kategori) use ($search_kategori) {
+                return $kategori->id_akomodasi_cat === intval($search_kategori);
+            });
+            $kategori = array_pop($kategori);
+            $data['title_page'] = 'Kategori Akomodasi: ' . $kategori->nama_cat . ' - Website Agen Wisata';
+            $data['id_kategori'] = $kategori->id_akomodasi_cat;
+            $data['nama_kategori'] = $kategori->nama_cat;
+        }
+
+        return view('user.parts.search.akomodasi', $data);
     }
 
     /**
@@ -267,7 +326,7 @@ class Akomodasi extends Controller
     {
         if (!$request->session()->exists('login_user'))
             return redirect()->route('admin');
-        
+
         // query data thumbnail dan galeri
         $data = DB::table('akomodasi')
             ->select('thumbnail', 'galeri_src')

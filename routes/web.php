@@ -36,8 +36,9 @@ Route::get('/transportasi/{id_transportasi}', [Transportasi::class, 'index'])->n
 Route::get('/emergency', [Emergency::class, 'index'])->name('enduser.emergency');
 
 // akomodasi
-Route::get('/akomodasi/{id_akomodasi_cat}', [Akomodasi::class, 'index'])->name('enduser.akomodasi');
+Route::get('/akomodasi/kategori/{id_akomodasi_cat}', [Akomodasi::class, 'index'])->name('enduser.akomodasi')->where('id_akomodasi_cat', '[0-9]+');
 Route::get('/akomodasi/{id_akomodasi_cat}/{id_akomodasi}', [Akomodasi::class, 'detail'])->name('enduser.akomodasi.detail');
+Route::post('/akomodasi/search', [Akomodasi::class, 'search'])->name('enduser.akomodasi.search');
 
 // agen wisata
 Route::get('/agen', [Agen::class, 'index'])->name('enduser.agen');
