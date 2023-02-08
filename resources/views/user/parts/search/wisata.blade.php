@@ -10,9 +10,9 @@
                     <span>
                         <a href="{{ route('enduser.homepage') }}" class="text-white">Beranda</a>
                         <span class="text-white">/</span>
-                        <span class="text-white">Peta Wisata</span>
+                        <span class="text-white">{{ $bread_main_title }}</span>
                     </span>
-                    <h1 class="mb-4 text-white">Peta Wisata</h1>
+                    <h1 class="mb-4 text-white">{{ $bread_main_title }}</h1>
                 </div>
             </div>
         </div>
@@ -41,9 +41,10 @@
                     </div>
                 </form>
             </div>
+            <p class="fw-bold">List hasil pencarian destinasi:</p>
             <div class="row">
-                @if (count($wisata) > 0)
-                @foreach($wisata as $w)
+                @if (count($list) > 0)
+                @foreach($list as $w)
                 <a href="{{ route('enduser.petawisata.detail', ['id_wisata' => $w->id_wisata]) }}" class="col-lg-3 col-md-4 col-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4 card-accomodation">
                     <div>
                         <img src="{{ asset('uploads/wisata/' . $w->thumbnail) }}" class="img-fluid">
@@ -57,7 +58,7 @@
                 @endforeach
                 @else
                 <div class="alert alert-secondary text-center" role="alert">
-                    Data belum dimuat.
+                    Hasil pencarian tidak ditemukan.
                 </div>
                 @endif
             </div>

@@ -33,7 +33,7 @@
                     </div>
                 </form>
             </div>
-            <p class="fw-bold">Hasil Pencarian Agen:</p>
+            <p class="fw-bold">List hasil pencarian agen wisata:</p>
             <div class="row">
                 @if (count($list) > 0)
                 @foreach($list as $ls)

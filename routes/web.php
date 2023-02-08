@@ -53,6 +53,7 @@ Route::post('/paket/search', [Paket::class, 'search'])->name('enduser.paket.sear
 // peta wisata
 Route::get('/wisata', [Wisata::class, 'index'])->name('enduser.petawisata');
 Route::get('/wisata/{id_wisata}', [Wisata::class, 'detail'])->name('enduser.petawisata.detail');
+Route::post('/wisata/search', [Wisata::class, 'search'])->name('enduser.petawisata.search');
 
 // dtw (daya tarik wisata)
 Route::get('/daya-tarik', [DayaTarik::class, 'index'])->name('enduser.dayatarik');

@@ -66,6 +66,67 @@ class Wisata extends Controller
         return view('user.parts.details.wisata', $data);
     }
 
+    // public method pencarian 
+    public function search(Request $request)
+    {
+        $kategori_peta = '';
+        $nama_peta = '';
+        $query = DB::table('wisata')
+            ->select('id_wisata', 'id_wisata_cat', 'judul', 'thumbnail', 'alamat');
+
+        // cari berdasarkan kategori akomodasi
+        if ($request->input('kategori_peta', null)) {
+            $kategori_peta = $request->input('kategori_peta');
+            $query->where('id_wisata_cat', '=', $kategori_peta);
+        }
+
+        // cari berdasarkan nama akomodasi
+        if ($request->input('nama_peta', null)) {
+            $nama_peta = $request->input('nama_peta');
+            $query->where('judul', 'like', "%" . $nama_peta . "%");
+        }
+
+        // kalau tidak ada pencarian
+        if (!$kategori_peta && !$nama_peta) {
+            return redirect()->route('enduser.petawisata'); // redirect ke halaman sebelumnya
+        }
+
+        // query data nama transportasi, akomodasi, dan kategori akomodasi
+        $transportasi = DB::table('transportasi')
+            ->select('id_transportasi', 'nama')
+            ->get()->all();
+        $akomodasi = DB::table('akomodasi_cat')
+            ->select('id_akomodasi_cat', 'nama_cat')
+            ->get()->all();
+        $wilayah_wisata = DB::table('wisata_cat')
+            ->select('id_wisata_cat', 'kecamatan')
+            ->get()->all();
+
+        $data = [
+            'title_page' => 'Cari Destinasi dengan Nama: ' . $nama_peta . ' - Website Agen Wisata',
+            'bread_main_title' => 'Cari Destinasi dengan Nama : ' . $nama_peta,
+            'transportasi' => $transportasi,
+            'akomodasi' => $akomodasi,
+            'wilayah_wisata' => $wilayah_wisata,
+            'list' => $query->get()->all(),
+            'search_nama' => $nama_peta,
+        ];
+
+        // jika dicari menggunakan kategori akomodasi
+        if ($kategori_peta) {
+            $kategori = array_filter($wilayah_wisata, function ($kategori) use ($kategori_peta) {
+                return $kategori->id_wisata_cat === intval($kategori_peta);
+            });
+            $kategori = array_pop($kategori);
+            $data['title_page'] = 'Destinasi di Wilayah: ' . $kategori->kecamatan . ' - Website Agen Wisata';
+            $data['bread_main_title'] = 'Destinasi di Wilayah: ' . $kategori->kecamatan;
+            $data['id_kategori'] = $kategori->id_wisata_cat;
+            $data['nama_kategori'] = $kategori->kecamatan;
+        }
+
+        return view('user.parts.search.wisata', $data);
+    }
+
     /**
      * for admin
      */
@@ -244,7 +305,7 @@ class Wisata extends Controller
     {
         if (!$request->session()->exists('login_user'))
             return redirect()->route('admin');
-        
+
         // query data thumbnail dan galeri
         $data = DB::table('wisata')
             ->select('thumbnail', 'galeri_src')

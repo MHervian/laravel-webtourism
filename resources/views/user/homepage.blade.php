@@ -5,7 +5,7 @@
     <header class="bg-header">
         <div class="container py-5">
             <div class="row py-5">
-                <div class="col-lg-6 py-5">
+                <div class="col-lg-8 py-5">
                     <h1 class="mb-4 text-white">{{ $homepage->main_title }}</h1>
                     <p class="text-white">
                     {{ $homepage->desc_main }}
