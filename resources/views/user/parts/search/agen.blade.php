@@ -10,9 +10,9 @@
                     <span>
                         <a href="{{ route('enduser.homepage') }}" class="text-white">Beranda</a>
                         <span class="text-white">/</span>
-                        <span class="text-white">Agen Wisata</span>
+                        <span class="text-white">{{ $bread_main_title }}</span>
                     </span>
-                    <h1 class="mb-4 text-white">Agen Wisata</h1>
+                    <h1 class="mb-4 text-white">{{ $bread_main_title }}</h1>
                 </div>
             </div>
         </div>
@@ -33,21 +33,21 @@
                     </div>
                 </form>
             </div>
-            <!-- <p class="fw-bold">Hasil Pencarian Agen:</p> -->
+            <p class="fw-bold">Hasil Pencarian Agen:</p>
             <div class="row">
-                @if (count($agen) > 0)
-                @foreach($agen as $ag)
-                <a href="{{ route('enduser.agen.detail', ['id_agen_wisata' => $ag->id_agen_wisata]) }}" class="col-lg-3 col-md-4 col-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4 card-accomodation">
+                @if (count($list) > 0)
+                @foreach($list as $ls)
+                <a href="{{ route('enduser.agen.detail', ['id_agen_wisata' => $ls->id_agen_wisata]) }}" class="col-lg-3 col-md-4 col-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4 card-accomodation">
                     <div>
-                        @if ($ag->thumbnail !== null)
+                        @if ($ls->thumbnail !== null)
                         <div class="p-3">
-                            <img src="{{ asset('uploads/agen/' . $ag->thumbnail) }}" class="img-fluid">
+                            <img src="{{ asset('uploads/agen/' . $ls->thumbnail) }}" class="img-fluid">
                         </div>
                         @endif
                         <div class="p-2">
-                            <p class="m-0">{{ $ag->nama }}</p>
-                            <span class="d-block mb-2" style="font-size: 15px;">{{ $ag->alamat }}</span>
-                            <span class="d-block mb-2" style="font-size: 15px;">{{ $ag->no_kontak }}</span>
+                            <p class="m-0">{{ $ls->nama }}</p>
+                            <span class="d-block mb-2" style="font-size: 15px;">{{ $ls->alamat }}</span>
+                            <span class="d-block mb-2" style="font-size: 15px;">{{ $ls->no_kontak }}</span>
                             <span style="font-size: 17px; color: blue;">Buka Detail</span>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                 @endforeach
                 @else
                 <div class="alert alert-secondary text-center" role="alert">
-                    Data belum dimuat.
+                    Data hasil pencarian tidak ditemukan.
                 </div>
                 @endif
             </div>

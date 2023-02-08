@@ -69,6 +69,44 @@ class Agen extends Controller
         return view('user.parts.details.agen', $data);
     }
 
+    // method untuk proses cari data
+    public function search(Request $request)
+    {
+        $search_nama = '';
+        $query = DB::table('agen_wisata')
+            ->select('id_agen_wisata', 'nama', 'no_kontak', 'thumbnail', 'alamat');
+
+        // cari berdasarkan nama agen wisata
+        if ($request->input('nama_agen', null)) {
+            $search_nama = $request->input('nama_agen');
+            $query->where('nama', 'like', "%" . $search_nama . "%");
+        }
+
+        // kalau tidak ada pencarian
+        if (!$search_nama) {
+            return redirect()->route('enduser.agen'); // redirect ke halaman sebelumnya
+        }
+
+        // query data nama transportasi, akomodasi, dan kategori akomodasi
+        $transportasi = DB::table('transportasi')
+            ->select('id_transportasi', 'nama')
+            ->get()->all();
+        $akomodasi = DB::table('akomodasi_cat')
+            ->select('id_akomodasi_cat', 'nama_cat')
+            ->get()->all();
+
+        $data = [
+            'title_page' => 'Hasil Cari Agen: ' . $search_nama . ' - Website Agen Wisata',
+            'bread_main_title' => 'Hasil Cari Agen : ' . $search_nama,
+            'transportasi' => $transportasi,
+            'akomodasi' => $akomodasi,
+            'list' => $query->get()->all(),
+            'search_nama' => $search_nama,
+        ];
+
+        return view('user.parts.search.agen', $data);
+    }
+
     /**
      * for admin
      */

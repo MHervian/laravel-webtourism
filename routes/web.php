@@ -43,6 +43,7 @@ Route::post('/akomodasi/search', [Akomodasi::class, 'search'])->name('enduser.ak
 // agen wisata
 Route::get('/agen', [Agen::class, 'index'])->name('enduser.agen');
 Route::get('/agen/{id_agen_wisata}', [Agen::class, 'detail'])->name('enduser.agen.detail');
+Route::post('/agen/search', [Agen::class, 'search'])->name('enduser.agen.search');
 
 // paket wisata
 Route::get('/paket', [Paket::class, 'index'])->name('enduser.paket');

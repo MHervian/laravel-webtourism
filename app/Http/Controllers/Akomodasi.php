@@ -129,7 +129,6 @@ class Akomodasi extends Controller
             'akomodasi' => $akomodasi,
             'kategori_akomodasi' => $kategori_akomodasi,
             'list' => $query->get()->all(),
-            // 'id_kategori' => '',
             'nama_kategori' => '',
             'search_nama' => $search_nama,
         ];

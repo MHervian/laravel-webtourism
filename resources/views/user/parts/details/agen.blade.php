@@ -25,7 +25,7 @@
             <div class="row rounded mb-5">
                 <div class="col-lg-5">
                     <div class="bg-white rounded p-3">
-                        <img src="{{ asset('storage/agen/' . $agen->thumbnail) }}" class="img-fluid mb-3">
+                        <img src="{{ asset('uploads/agen/' . $agen->thumbnail) }}" class="img-fluid mb-3">
                         <h2>Deskripsi Agen</h2>
                         {!! $agen->deskripsi !!}
                     </div>
@@ -50,7 +50,7 @@
                 @foreach ($paket as $p)
                 <a href="{{ route('enduser.paket.detail', ['id_paket' => $p->id_paket]) }}" class="col-lg-3 col-md-4 col-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4 card-accomodation">
                     <div>
-                        <img src="{{ asset('storage/paket/' . $p->poster_iklan) }}" class="img-fluid">
+                        <img src="{{ asset('uploads/paket/' . $p->poster_iklan) }}" class="img-fluid">
                         <div class="p-2">
                             <p class="m-0">{{ $p->judul }}</p>
                             <span class="d-block mb-2 mt-1">Rp.{{ number_format($p->harga) }}</span>
