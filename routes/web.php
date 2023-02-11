@@ -58,10 +58,13 @@ Route::post('/wisata/search', [Wisata::class, 'search'])->name('enduser.petawisa
 // dtw (daya tarik wisata)
 Route::get('/daya-tarik', [DayaTarik::class, 'index'])->name('enduser.dayatarik');
 Route::get('/daya-tarik/{id_dt_cat}/{id_dt}', [DayaTarik::class, 'detail'])->name('enduser.dayatarik.detail');
+Route::post('/daya-tarik/search', [DayaTarik::class, 'search'])->name('enduser.dayatarik.search');
 
 // kalender event
 Route::get('/kalender', [Kalender::class, 'index'])->name('enduser.kalender');
 Route::get('/kalender/{id_kalender}', [Kalender::class, 'detail'])->name('enduser.kalender.detail');
+Route::get('/kalender/kategori/{id_kalender_cat}', [Kalender::class, 'search'])->name('enduser.kalender.kategori');
+Route::post('/kalender/search', [Kalender::class, 'search'])->name('enduser.kalender.search');
 
 /** Admin endpoints */
 // route login admin

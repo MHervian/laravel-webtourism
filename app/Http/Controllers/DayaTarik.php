@@ -13,7 +13,8 @@ class DayaTarik extends Controller
      */
 
     // main index
-    public function index() {
+    public function index()
+    {
         // query data nama transportasi dan akomodasi
         $transportasi = DB::table('transportasi')
             ->select('id_transportasi', 'nama')
@@ -42,7 +43,8 @@ class DayaTarik extends Controller
     }
 
     // menampilkan detail
-    public function detail($id_dt = null) {
+    public function detail($id_dt = null)
+    {
         // query data nama transportasi dan akomodasi
         $transportasi = DB::table('transportasi')
             ->select('ild_transportasi', 'nama')
@@ -50,7 +52,7 @@ class DayaTarik extends Controller
         $akomodasi = DB::table('akomodasi_cat')
             ->select('id_akomodasi_cat', 'nama_cat')
             ->get()->all();
-        
+
         $detail = DB::table('dt')
             ->where('id_dt', '=', $id_dt)
             ->get()->first();
@@ -63,6 +65,67 @@ class DayaTarik extends Controller
         ];
 
         return view('user.parts.details.dayatarik', $data);
+    }
+
+    // method pencarian data
+    public function search(Request $request)
+    {
+        $id_kategori = '';
+        $nama_aktivitas = '';
+        $query = DB::table('dt')
+            ->select('id_dt', 'id_dt_cat', 'judul', 'thumbnail', 'alamat');
+
+        // cari berdasarkan kategori aktivitas
+        if ($request->input('id_kategori', null)) {
+            $id_kategori = $request->input('id_kategori');
+            $query->where('id_dt_cat', '=', $id_kategori);
+        }
+
+        // cari berdasarkan nama aktivitas
+        if ($request->input('nama_aktivitas', null)) {
+            $nama_aktivitas = $request->input('nama_aktivitas');
+            $query->where('judul', 'like', "%" . $nama_aktivitas . "%");
+        }
+
+        // kalau tidak ada pencarian
+        if (!$id_kategori && !$nama_aktivitas) {
+            return redirect()->route('enduser.dayatarik'); // redirect ke halaman sebelumnya
+        }
+
+        // query data nama transportasi, akomodasi, dan kategori akomodasi
+        $transportasi = DB::table('transportasi')
+            ->select('id_transportasi', 'nama')
+            ->get()->all();
+        $akomodasi = DB::table('akomodasi_cat')
+            ->select('id_akomodasi_cat', 'nama_cat')
+            ->get()->all();
+        $kategori_aktivitas = DB::table('dt_cat')
+            ->select('id_dt_cat', 'nama_dt')
+            ->get()->all();
+
+        $data = [
+            'title_page' => 'Cari Berdasarkan Nama: ' . $nama_aktivitas . ' - Website Agen Wisata',
+            'bread_main_title' => 'Cari Berdasarkan Nama : ' . $nama_aktivitas,
+            'transportasi' => $transportasi,
+            'akomodasi' => $akomodasi,
+            'dt_cat' => $kategori_aktivitas,
+            'list' => $query->get()->all(),
+            'nama_aktivitas' => $nama_aktivitas,
+        ];
+
+        // jika dicari menggunakan kategori akomodasi
+        if ($id_kategori) {
+            $kategori = array_filter($kategori_aktivitas, function ($kategori) use ($id_kategori) {
+                return $kategori->id_dt_cat === intval($id_kategori);
+            });
+            $kategori = array_pop($kategori);
+            $data['title_page'] = 'Cari Berdasarkan Kategori: ' . $kategori->nama_dt . ' - Website Agen Wisata';
+            $data['bread_title'] = 'Cari Berdasarkan Kategori: ' . $kategori->nama_dt;
+            $data['id_kategori'] = $kategori->id_dt_cat;
+            $data['nama_kategori'] = $kategori->nama_dt;
+        }
+
+        return view('user.parts.search.dayatarik', $data);
     }
 
     /**
@@ -244,7 +307,7 @@ class DayaTarik extends Controller
     {
         if (!$request->session()->exists('login_user'))
             return redirect()->route('admin');
-        
+
         // query data thumbnail dan galeri
         $data = DB::table('dt')
             ->select('thumbnail', 'galeri_src')

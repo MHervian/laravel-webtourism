@@ -23,15 +23,15 @@
     <div class="back-grey">
         <div class="container py-5">
             <div class="row">
-                <div class="col-lg-7 col-md-8">
+                <div class="col-lg-8 col-md-8">
                     <div class="bg-white rounded p-4">
                         <div class="mb-3 text-center">
-                            <img src="{{ asset('storage/kalender/' . $detail->thumbnail) }}" class="img-fluid"> 
+                            <img src="{{ asset('uploads/kalender/' . $detail->thumbnail) }}" class="img-fluid"> 
                         </div>
                         {!! $detail->deskripsi !!}
                     </div>
                 </div>
-                <div class="col-lg-5 col-md-4">
+                <div class="col-lg-4 col-md-4">
                     <h4>Kategori Kegiatan:</h4>
                     <ul class="nav flex-column">
                         @foreach($kalender_cat as $kc)

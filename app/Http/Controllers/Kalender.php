@@ -13,7 +13,8 @@ class Kalender extends Controller
      */
 
     // main index
-    public function index() {
+    public function index()
+    {
         // query data nama transportasi dan akomodasi
         $transportasi = DB::table('transportasi')
             ->select('id_transportasi', 'nama')
@@ -21,7 +22,7 @@ class Kalender extends Controller
         $akomodasi = DB::table('akomodasi_cat')
             ->select('id_akomodasi_cat', 'nama_cat')
             ->get()->all();
-        
+
         // query data event/kalender    
         $kalender = DB::table('kalender')
             ->select('id_kalender', 'id_kalender_cat', 'judul', 'thumbnail')
@@ -30,7 +31,7 @@ class Kalender extends Controller
         $kalender_cat = DB::table('kalender_cat')
             ->select('id_kalender_cat', 'nama_cat')
             ->get()->all();
-            
+
         $data = [
             'title_page' => 'Kalender - Web Agen Wisata',
             'transportasi' => $transportasi,
@@ -43,7 +44,8 @@ class Kalender extends Controller
     }
 
     // detail kalender/event
-    public function detail($id_kalender = null) {
+    public function detail($id_kalender = null)
+    {
         // query data nama transportasi dan akomodasi
         $transportasi = DB::table('transportasi')
             ->select('id_transportasi', 'nama')
@@ -51,7 +53,7 @@ class Kalender extends Controller
         $akomodasi = DB::table('akomodasi_cat')
             ->select('id_akomodasi_cat', 'nama_cat')
             ->get()->all();
-        
+
         // query data event/kalender    
         $detail = DB::table('kalender')
             ->where('id_kalender', '=', $id_kalender)
@@ -60,7 +62,7 @@ class Kalender extends Controller
         $kalender_cat = DB::table('kalender_cat')
             ->select('id_kalender_cat', 'nama_cat')
             ->get()->all();
-    
+
         $data = [
             'title_page' => 'Kalender - Web Agen Wisata',
             'transportasi' => $transportasi,
@@ -68,8 +70,90 @@ class Kalender extends Controller
             'detail' => $detail,
             'kalender_cat' => $kalender_cat
         ];
-        
+
         return view('user.parts.details.kalender', $data);
+    }
+
+    // method pencarian 
+    public function search(Request $request, $id_kategori_cat = null)
+    {
+        $query = DB::table('kalender')
+            ->select('id_kalender', 'id_kalender_cat', 'judul', 'thumbnail');
+
+        // query data nama transportasi, akomodasi, dan kategori kalender
+        $transportasi = DB::table('transportasi')
+            ->select('id_transportasi', 'nama')
+            ->get()->all();
+        $akomodasi = DB::table('akomodasi_cat')
+            ->select('id_akomodasi_cat', 'nama_cat')
+            ->get()->all();
+        $kategori_kalender = DB::table('kalender_cat')
+            ->select('id_kalender_cat', 'nama_cat')
+            ->get()->all();
+
+        // pencarian menggunakan link kategori
+        if ($id_kategori_cat) {
+            $kategori = array_filter($kategori_kalender, function ($kategori) use ($id_kategori_cat) {
+                return $kategori->id_kalender_cat === intval($id_kategori_cat);
+            });
+            $kategori = array_pop($kategori);
+
+            $data = [
+                'title_page' => 'List Kalender/Event dengan Kategori: ' . $kategori->nama_cat . ' - Website Agen Wisata',
+                'bread_main_title' => 'List Kalender/Event dengan Kategori: ' . $kategori->nama_cat,
+                'transportasi' => $transportasi,
+                'akomodasi' => $akomodasi,
+                'kategori_kalender' => $kategori_kalender,
+                'list' => $query->where('id_kalender', '=', $id_kategori_cat)->get()->all(),
+                'id_kategori' => $query->where('id_kalender_cat', '=', $id_kategori_cat)->get()->all(),
+                'nama_kategori' => $kategori->nama_cat,
+                'display' => true,
+            ];
+        } else { // pencarian dengan menggunakan form
+            $id_kategori_kalender = '';
+            $nama_kalender = '';
+
+            // cari berdasarkan kategori kalender/event
+            if ($request->input('id_kategori_kalender', null)) {
+                $id_kategori_kalender = $request->input('id_kategori_kalender');
+                $query->where('id_kalender_cat', '=', $id_kategori_kalender);
+            }
+
+            // cari berdasarkan nama kalender/event
+            if ($request->input('nama_kalender', null)) {
+                $nama_kalender = $request->input('nama_kalender');
+                $query->where('judul', 'like', "%" . $nama_kalender . "%");
+            }
+
+            // kalau tidak ada pencarian
+            if (!$id_kategori_kalender && !$nama_kalender) {
+                return redirect()->route('enduser.kalender'); // redirect ke halaman sebelumnya
+            }
+
+            $data = [
+                'title_page' => 'Cari Kalender/Event dengan Nama: ' . $nama_kalender . ' - Website Agen Wisata',
+                'bread_main_title' => 'Cari Kalender/Event dengan Nama: ' . $nama_kalender,
+                'transportasi' => $transportasi,
+                'akomodasi' => $akomodasi,
+                'kategori_kalender' => $kategori_kalender,
+                'list' => $query->get()->all(),
+                'nama_kalender' => $nama_kalender,
+            ];
+
+            // jika dicari menggunakan kategori kalender
+            if ($id_kategori_kalender) {
+                $kategori = array_filter($kategori_kalender, function ($kategori) use ($id_kategori_kalender) {
+                    return $kategori->id_kalender_cat === intval($id_kategori_kalender);
+                });
+                $kategori = array_pop($kategori);
+                $data['title_page'] = 'Cari Kalender/Event dengan Kategori: ' . $kategori->nama_cat . ' - Website Agen Wisata';
+                $data['bread_title'] = 'Cari Kalender/Event dengan Kategori: ' . $kategori->nama_cat;
+                $data['id_kategori'] = $kategori->id_kalender_cat;
+                $data['nama_kategori'] = $kategori->nama_cat;
+            }
+        }
+
+        return view('user.parts.search.kalender', $data);
     }
 
     /**
@@ -221,7 +305,7 @@ class Kalender extends Controller
     {
         if (!$request->session()->exists('login_user'))
             return redirect()->route('admin');
-        
+
         // query data thumbnail dan galeri
         $data = DB::table('kalender')
             ->select('thumbnail')

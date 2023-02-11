@@ -27,7 +27,7 @@
                         <div class="col-md-4 mb-md-0 mb-sm-3 mb-3 mb-lg-0">
                             <select name="id_kategori_kalender" class="form-control">
                                 <option value="">Pilih Event..</option>
-                                @foreach($kalender_cat as $kc)
+                                @foreach($kategori_kalender as $kc)
                                 <option value="{{ $kc->id_kalender_cat }}">{{ $kc->nama_cat }}</option>
                                 @endforeach
                             </select>
@@ -44,19 +44,18 @@
             <div class="pb-4">
                 <p style="font-weight: 700;">Kategori Kalender:</p>
                 <ul class="nav-category p-0 m-0">
-                    @foreach($kalender_cat as $kc)
+                    @foreach($kategori_kalender as $kc)
                     <li class="bg-white border rounded mb-3">
-                        <a href="{{ route('enduser.kalender.kategori', ['id_kalender_cat' => $kc->id_kalender_cat]) }}" class="btn">
-                            {{ $kc->nama_cat }}
-                        </a>
+                        <a href="{{ route('enduser.kalender.kategori', ['id_kalender_cat' => $kc->id_kalender_cat]) }}" class="btn">{{ $kc->nama_cat }}</a>
                     </li>
                     @endforeach
                 </ul>
             </div>
+            <p class="fw-bold">Hasil Pencarian Kalender Event:</p>
             <div class="row">
-                @if (count($kalender) > 0)
+                @if (count($list) > 0)
                 <div class="row">
-                    @foreach($kalender as $k)
+                    @foreach($list as $k)
                     <div class="col-lg-3 col-md-4 col-sm-6 p-3 mb-md-4 mb-sm-4 mb-4 mb-lg-4 event-list">
                         <a href="{{ route('enduser.kalender.detail', ['id_kalender' => $k->id_kalender]) }}" class="align-items-center">
                             <div class="text-center mb-2">
