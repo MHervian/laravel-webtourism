@@ -115,7 +115,7 @@ class Wisata extends Controller
         // jika dicari menggunakan kategori akomodasi
         if ($kategori_peta) {
             $kategori = array_filter($wilayah_wisata, function ($kategori) use ($kategori_peta) {
-                return $kategori->id_wisata_cat === intval($kategori_peta);
+                return $kategori->id_wisata_cat == intval($kategori_peta);
             });
             $kategori = array_pop($kategori);
             $data['title_page'] = 'Destinasi di Wilayah: ' . $kategori->kecamatan . ' - Website Agen Wisata';

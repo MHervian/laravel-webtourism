@@ -116,11 +116,11 @@ class DayaTarik extends Controller
         // jika dicari menggunakan kategori akomodasi
         if ($id_kategori) {
             $kategori = array_filter($kategori_aktivitas, function ($kategori) use ($id_kategori) {
-                return $kategori->id_dt_cat === intval($id_kategori);
+                return $kategori->id_dt_cat == intval($id_kategori);
             });
             $kategori = array_pop($kategori);
             $data['title_page'] = 'Cari Berdasarkan Kategori: ' . $kategori->nama_dt . ' - Website Agen Wisata';
-            $data['bread_title'] = 'Cari Berdasarkan Kategori: ' . $kategori->nama_dt;
+            $data['bread_main_title'] = 'Cari Berdasarkan Kategori: ' . $kategori->nama_dt;
             $data['id_kategori'] = $kategori->id_dt_cat;
             $data['nama_kategori'] = $kategori->nama_dt;
         }

@@ -94,7 +94,7 @@ class Kalender extends Controller
         // pencarian menggunakan link kategori
         if ($id_kategori_cat) {
             $kategori = array_filter($kategori_kalender, function ($kategori) use ($id_kategori_cat) {
-                return $kategori->id_kalender_cat === intval($id_kategori_cat);
+                return $kategori->id_kalender_cat == intval($id_kategori_cat);
             });
             $kategori = array_pop($kategori);
 
@@ -143,11 +143,11 @@ class Kalender extends Controller
             // jika dicari menggunakan kategori kalender
             if ($id_kategori_kalender) {
                 $kategori = array_filter($kategori_kalender, function ($kategori) use ($id_kategori_kalender) {
-                    return $kategori->id_kalender_cat === intval($id_kategori_kalender);
+                    return $kategori->id_kalender_cat == intval($id_kategori_kalender);
                 });
                 $kategori = array_pop($kategori);
                 $data['title_page'] = 'Cari Kalender/Event dengan Kategori: ' . $kategori->nama_cat . ' - Website Agen Wisata';
-                $data['bread_title'] = 'Cari Kalender/Event dengan Kategori: ' . $kategori->nama_cat;
+                $data['bread_main_title'] = 'Cari Kalender/Event dengan Kategori: ' . $kategori->nama_cat;
                 $data['id_kategori'] = $kategori->id_kalender_cat;
                 $data['nama_kategori'] = $kategori->nama_cat;
             }

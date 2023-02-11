@@ -126,11 +126,11 @@ class Paket extends Controller
         // jika dicari menggunakan kategori akomodasi
         if ($id_agen) {
             $kategori_agen = array_filter($agen, function ($kategori) use ($id_agen) {
-                return $kategori->id_agen_wisata === intval($id_agen);
+                return $kategori->id_agen_wisata == intval($id_agen);
             });
             $kategori_agen = array_pop($kategori_agen);
             $data['title_page'] = 'Cari Paket Berdasarkan Agen: ' . $kategori_agen->nama . ' - Website Agen Wisata';
-            $data['bread_title'] = 'Cari Paket Berdasarkan Agen: ' . $kategori_agen->nama;
+            $data['bread_main_title'] = 'Cari Paket Berdasarkan Agen: ' . $kategori_agen->nama;
             $data['id_agen'] = $kategori_agen->id_agen_wisata;
             $data['nama_agen'] = $kategori_agen->nama;
         }

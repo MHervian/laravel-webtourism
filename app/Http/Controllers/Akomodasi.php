@@ -35,7 +35,7 @@ class Akomodasi extends Controller
 
         // ambil data nama kategori akomodasi
         $kategori = array_filter($kategori_akomodasi, function ($kategori) use ($id_akomodasi_cat) {
-            return $kategori->id_akomodasi_cat === intval($id_akomodasi_cat);
+            return $kategori->id_akomodasi_cat == intval($id_akomodasi_cat);
         });
         $kategori = array_pop($kategori);
 
@@ -136,11 +136,11 @@ class Akomodasi extends Controller
         // jika dicari menggunakan kategori akomodasi
         if ($search_kategori) {
             $kategori = array_filter($kategori_akomodasi, function ($kategori) use ($search_kategori) {
-                return $kategori->id_akomodasi_cat === intval($search_kategori);
+                return $kategori->id_akomodasi_cat == intval($search_kategori);
             });
             $kategori = array_pop($kategori);
             $data['title_page'] = 'Cari Berdasarkan Kategori: ' . $kategori->nama_cat . ' - Website Agen Wisata';
-            $data['bread_title'] = 'Cari Berdasarkan Kategori: ' . $kategori->nama_cat;
+            $data['bread_main_title'] = 'Cari Berdasarkan Kategori: ' . $kategori->nama_cat;
             $data['id_kategori'] = $kategori->id_akomodasi_cat;
             $data['nama_kategori'] = $kategori->nama_cat;
         }
