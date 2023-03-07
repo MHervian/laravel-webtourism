@@ -80,6 +80,7 @@
     <script src="{{ url('src/vendor/jquery/jquery-3.6.1.min.js') }}"></script>
     <!-- Bootstrap JS -->
     <script src="{{ url('src/vendor/bootstrap5/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url('app.js') }}"></script>
 </body>
 
 </html>
